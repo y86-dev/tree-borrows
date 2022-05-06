@@ -234,7 +234,7 @@ Reading a pointer with a different tag does not require any modification of the 
 
 \subsubsection{Write Access}
 
-Writing to a pointer with tag \UNQ will remove all derived \UNQ, \SHIR and \TPU pointers, inheriting any of their \SHRO children. All derived \SHRW will be turned into \SHRO. This re-asserts the uniqueness of the pointer (removing all derived aliasing pointers/turning them into read only) and prevents future reads using a \SHIR (because that pointer would then observe a written-to value) and prevents future activation of any \TPU.
+Writing to a pointer with tag \UNQ will remove all derived pointers.
 
 Writing to a pointer with tag \SHRW does not require any any modification of the tree. Only a check for existence of the pointer tag.
 
@@ -246,7 +246,7 @@ When deriving a pointer with \UNQ / \SHIR tag from a pointer with \SHRW / \SHRO 
     \item \SHRW $\mapsto$ \UNQ:
     \begin{enumerate}
         \item check if the pointer tag exists
-        \item remove all descendants with \UNQ, \SHRW, \SHIR, \TPU tag and inherit their children.
+        \item remove all descendants
         \item recurs the tree upwards to the root, exploring any side branches (all branches where the \SHRW is not a descendant) and remove all descendants with \UNQ, \SHRW, \SHIR, \TPU tag and inherit their children to the branching ancestor.
     \end{enumerate}
     \item \texttt{*} $\mapsto$ \SHIR
